@@ -14,10 +14,7 @@ var DB *sqlx.DB
 func ConnectSQL() error {
 	var err error
 	DB, err = sqlx.Connect("postgres", buildDataSourceName())
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func buildDataSourceName() string {

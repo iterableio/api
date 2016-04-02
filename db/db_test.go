@@ -1,9 +1,12 @@
 package db
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/iterableio/api/config"
 )
 
 func TestBuildDataSourceName(t *testing.T) {
@@ -12,7 +15,11 @@ func TestBuildDataSourceName(t *testing.T) {
 	dataSourceName := buildDataSourceName()
 
 	assert.Equal(dataSourceName,
-		"user=postgres password=postgres dbname=iterable_test sslmode=disable",
+		fmt.Sprintf("user=%v password=%v dbname=%v sslmode=%v",
+			config.Global.Postgres.User,
+			config.Global.Postgres.Password,
+			config.Global.Postgres.DBName,
+			config.Global.Postgres.SSLMode),
 		"Should be consistent with test.yaml")
 }
 

@@ -17,9 +17,7 @@ const (
 )
 
 // Other constants
-const (
-	configDir = "config"
-)
+const configDir = "config"
 
 var Global IterableConfig
 
@@ -39,7 +37,7 @@ type ConfigParser func(in []byte, out interface{}) error
 func init() {
 	configPath := getConfigPath()
 	if err := load(&Global, configPath, yaml.Unmarshal); err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to load config: %v", err)
 	}
 }
 
