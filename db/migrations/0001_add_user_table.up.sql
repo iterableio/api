@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  id          serial NOT NULL,
+  id          serial PRIMARY KEY,
   email       text NOT NULL,
   inserted_at timestamp without time zone NOT NULL DEFAULT now(),
   updated_at  timestamp without time zone NOT NULL DEFAULT now(),
