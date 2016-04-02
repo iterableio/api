@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"net/http"
+
+	"github.com/iterableio/api/core"
+)
 
 func main() {
-  fmt.Printf("Hello World.\n")
+	log.Fatal(http.ListenAndServe(":8080", core.InitRouter()))
 }
