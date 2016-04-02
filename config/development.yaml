@@ -1,0 +1,6 @@
+
+postgres:
+  user: postgres
+  password: postgres
+  dbname: iterable
+  sslmode: disable

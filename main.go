@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	_ "github.com/iterableio/api/config"
+	"github.com/iterableio/api/db"
+)
 
 func main() {
-	fmt.Printf("Hello World.\n")
+	fmt.Printf("Starting db\n")
+	db.ConnectSQL()
+	fmt.Printf("db started\n")
 }
