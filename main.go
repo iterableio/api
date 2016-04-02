@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"log"
+
+	_ "github.com/iterableio/api/config"
+	"github.com/iterableio/api/db"
+)
 
 func main() {
-	fmt.Printf("Hello World.\n")
+	log.Println("Starting DB")
+	if err := db.ConnectSQL(); err != nil {
+		log.Fatalf("Failed to connect to DB: %v", err)
+	}
+	log.Println("DB started")
 }
