@@ -1,2 +1,2 @@
 #!/bin/bash
-migrate -url postgres://postgres@localhost:5432/iterable -path ./db/migrations $@
+migrate -url 'postgres://postgres@localhost:5432/iterable?sslmode=disable' -path ./db/migrations $@

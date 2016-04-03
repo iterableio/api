@@ -1,6 +1,6 @@
 CREATE TABLE frames (
-  id          serial PRIMARY KEY,
-  content     jsonb,
+  id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  content     text,
   editor      text NOT NULL,
   frame_taken timestamp without time zone NOT NULL,
   file_id     uuid NOT NULL,
