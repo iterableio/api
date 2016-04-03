@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -9,11 +10,11 @@ import (
 	"github.com/iterableio/api/config"
 )
 
-var DB *sqlx.DB
+var db *sqlx.DB
 
 func ConnectSQL() error {
 	var err error
-	DB, err = sqlx.Connect("postgres", buildDataSourceName())
+	db, err = sqlx.Connect("postgres", buildDataSourceName())
 	return err
 }
 
@@ -23,4 +24,12 @@ func buildDataSourceName() string {
 		config.Global.Postgres.Password,
 		config.Global.Postgres.DBName,
 		config.Global.Postgres.SSLMode)
+}
+
+func init() {
+	log.Println("Starting DB")
+	if err := ConnectSQL(); err != nil {
+		log.Fatalf("Failed to connect to DB: %v", err)
+	}
+	log.Println("DB started")
 }
