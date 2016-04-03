@@ -23,6 +23,9 @@ _testmain.go
 *.test
 *.prof
 
-# Swap files
+# Swap files vim
 *.swp
 *.swo
+
+# Swap files emacs
+\#*#

@@ -4,6 +4,8 @@ CREATE TABLE frames (
   editor      text,
   frame_taken timestamp without time zone NOT NULL,
   file_id     uuid NOT NULL,
+  current_hash  text NOT NULL,
+  previous_hash text,
   inserted_at timestamp without time zone NOT NULL DEFAULT now()
 );
 

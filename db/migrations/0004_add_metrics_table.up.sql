@@ -4,7 +4,6 @@ CREATE TABLE metrics (
   context       jsonb,
   assets        jsonb,
   user_id       int NOT NULL,
-  previous_hash text,
   inserted_at   timestamp without time zone NOT NULL DEFAULT now()
 );
 
