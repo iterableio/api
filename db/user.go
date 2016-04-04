@@ -25,6 +25,10 @@ func FindUserById(id int) (User, error) {
 	return FindUserBy("id", id)
 }
 
+func FindUserByToken(token string) (User, error) {
+	return FindUserBy("token", token)
+}
+
 func CreateUser(email string) (User, error) {
 	var u User
 

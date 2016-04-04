@@ -24,6 +24,11 @@ func WriteErrorBadRequest(w http.ResponseWriter, err error) {
 	WriteError(w, err)
 }
 
+func WriteErrorUnauthorized(w http.ResponseWriter, err error) {
+	w.WriteHeader(http.StatusUnauthorized)
+	WriteError(w, err)
+}
+
 func WriteErrorInternal(w http.ResponseWriter, err error) {
 	w.WriteHeader(http.StatusInternalServerError)
 	WriteError(w, err)
