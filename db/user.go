@@ -6,9 +6,9 @@ import (
 )
 
 type User struct {
-	Id    int
-	Email string
-	Token string
+	Id    int    `json:"id"`
+	Email string `json:"email"`
+	Token string `json:"token"`
 }
 
 func FindUserBy(column string, value interface{}) (User, error) {
