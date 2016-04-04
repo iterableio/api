@@ -29,3 +29,6 @@ _testmain.go
 
 # Swap files emacs
 \#*#
+
+# Go dependency workspace
+vendor/*
