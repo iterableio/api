@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 var ErrNoUser = errors.New("no user")
@@ -73,6 +74,7 @@ func generateUniqueToken() (string, error) {
 }
 
 func randomToken() string {
+	rand.Seed(time.Now().UTC().UnixNano())
 	b := make([]byte, 12)
 	rand.Read(b)
 	return fmt.Sprintf("%x", b)

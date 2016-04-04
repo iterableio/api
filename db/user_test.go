@@ -4,12 +4,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/iterableio/api/common"
 )
 
 func TestCreateAndFindUser(t *testing.T) {
 	assert := assert.New(t)
 
-	user, err := CreateUser("swag@swag.swag")
+	user, err := CreateUser(common.RandomEmail())
 	assert.Nil(err)
 
 	userAgain, err := FindUserById(user.Id)
@@ -23,7 +25,7 @@ func TestCreateAndFindUser(t *testing.T) {
 func TestFailCreateWithSameEmail(t *testing.T) {
 	assert := assert.New(t)
 
-	email := "same@email.com"
+	email := common.RandomEmail()
 
 	_, err := CreateUser(email)
 	assert.Nil(err)

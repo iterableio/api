@@ -18,13 +18,12 @@ func auth(h httprouter.Handle) httprouter.Handle {
 		// should have format `token {TOKEN}`
 		payload := strings.Split(authHeader, " ")
 		if len(payload) != 2 || payload[0] != "token" {
-			// do things
 			WriteErrorUnauthorized(w, errors.New("Missing/incorrect auth header"))
 			return
 		}
 		user, err := db.FindUserByToken(payload[1])
 		if err != nil {
-			WriteErrorUnauthorized(w, err)
+			WriteErrorBadRequest(w, err)
 			return
 		}
 		setCurrentUser(r, user)

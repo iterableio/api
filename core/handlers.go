@@ -12,17 +12,16 @@ import (
 )
 
 func getUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	// this is actually horrible
 	targetId, err := strconv.Atoi(ps.ByName("userId"))
 	if err != nil {
 		WriteErrorBadRequest(w, err)
 		return
 	}
-
 	if currentUser := getCurrentUser(r); currentUser.Id != targetId {
 		WriteErrorUnauthorized(w, errors.New("You dont have permission to view this"))
 		return
 	}
-
 	target, err := db.FindUserById(targetId)
 	if err != nil {
 		WriteErrorBadRequest(w, err)
@@ -45,7 +44,7 @@ func createUser(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 	user, err := db.CreateUser(req.Email)
 	if err != nil {
-		WriteErrorInternal(w, err)
+		WriteErrorBadRequest(w, err)
 		return
 	}
 	WriteResponse(w, user)
