@@ -1,9 +1,13 @@
 package db
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 	"math/rand"
 )
+
+var ErrNoUser = errors.New("no user")
 
 type User struct {
 	Id    int    `json:"id"`
@@ -11,35 +15,40 @@ type User struct {
 	Token string `json:"token"`
 }
 
-func FindUserBy(column string, value interface{}) (User, error) {
-	var u User
-	err := db.QueryRowx(fmt.Sprintf("SELECT id, email, token FROM users WHERE %v=$1", column), value).StructScan(&u)
-	return u, err
+func FindUserBy(column string, value interface{}) (*User, error) {
+	u := &User{}
+	q := fmt.Sprintf("SELECT id, email, token FROM users WHERE %v=$1", column)
+
+	if err := db.Get(u, q, value); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, ErrNoUser
+		}
+		return nil, err
+	}
+	return u, nil
 }
 
-func FindUserByEmail(email string) (User, error) {
+func FindUserByEmail(email string) (*User, error) {
 	return FindUserBy("email", email)
 }
 
-func FindUserById(id int) (User, error) {
+func FindUserById(id int) (*User, error) {
 	return FindUserBy("id", id)
 }
 
-func FindUserByToken(token string) (User, error) {
+func FindUserByToken(token string) (*User, error) {
 	return FindUserBy("token", token)
 }
 
-func CreateUser(email string) (User, error) {
-	var u User
-
+func CreateUser(email string) (*User, error) {
 	token, err := generateUniqueToken()
 	if err != nil {
-		return u, err
+		return nil, err
 	}
 
 	_, err = db.Exec(`INSERT INTO users (email, token) VALUES ($1, $2)`, email, token)
 	if err != nil {
-		return u, err
+		return nil, err
 	}
 
 	return FindUserByEmail(email)
