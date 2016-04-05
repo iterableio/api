@@ -1,2 +1,8 @@
 #!/bin/bash
-migrate -url 'postgres://postgres@localhost:5432/iterable?sslmode=disable' -path ./db/migrations $@
+db="iterable"
+
+if [ "$ITERABLE_ENVIRONMENT" = "test" ]; then
+    db="iterable_test"
+fi
+
+migrate -url "postgres://postgres@localhost:5432/$db?sslmode=disable" -path ./db/migrations $@

@@ -17,11 +17,12 @@ func TestLoad(t *testing.T) {
 	assert := assert.New(t)
 
 	conf := IterableConfig{}
-	err := load(&conf, "development.yaml", yaml.Unmarshal)
-
+	err := load(&conf, "test.yaml", yaml.Unmarshal)
 	assert.Nil(err, "There was no error")
-	assert.Equal(conf.Postgres.DBName, "iterable", "This should be the same as development.yaml")
-	assert.Equal(conf.Postgres.SSLMode, "disable", "This should be the same as test.yaml")
+
+	same := "This should be the same as test.yaml"
+	assert.Equal(conf.Postgres.DBName, "iterable_test", same)
+	assert.Equal(conf.Postgres.SSLMode, "disable", same)
 }
 
 func TestLoadFileMissing(t *testing.T) {
@@ -50,7 +51,7 @@ func TestGetConfigPathFromEnv(t *testing.T) {
 
 	path := getConfigPath()
 
-	assert.Equal(path, "/hello/development.yaml")
+	assert.Equal(path, "/hello/test.yaml")
 }
 
 func TestGetConfigPathDefault(t *testing.T) {
@@ -61,5 +62,5 @@ func TestGetConfigPathDefault(t *testing.T) {
 
 	path := getConfigPath()
 
-	assert.Equal(path, "config/development.yaml")
+	assert.Equal(path, "config/test.yaml")
 }
