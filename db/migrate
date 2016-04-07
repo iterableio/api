@@ -5,4 +5,4 @@ if [ "$ITERABLE_ENVIRONMENT" = "test" ]; then
     db="iterable_test"
 fi
 
-migrate -url "postgres://postgres@localhost:5432/$db?sslmode=disable" -path ./db/migrations $@
+migrate -url "postgres://postgres@localhost:5432/$db?sslmode=disable&password=postgres" -path ./db/migrations $@
