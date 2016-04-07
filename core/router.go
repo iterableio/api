@@ -10,9 +10,9 @@ import (
 func InitRouter() *httprouter.Router {
 	router := httprouter.New()
 
-	router.GET("/api/v1/", index)
-	router.GET("/api/v1/users/:userId", auth(getUser))
-	router.POST("/api/v1/users", createUser)
+	router.GET("/api/", index)
+	router.GET("/api/users/:userId", auth(getUser))
+	router.POST("/api/users", createUser)
 
 	return router
 }

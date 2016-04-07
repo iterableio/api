@@ -22,7 +22,7 @@ func init() {
 }
 
 func getUrl(route string) string {
-	return fmt.Sprintf("%s/api/v1%s", server.URL, route)
+	return fmt.Sprintf("%s/api%s", server.URL, route)
 }
 
 func TestIndex(t *testing.T) {
