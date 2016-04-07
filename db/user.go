@@ -18,9 +18,16 @@ type User struct {
 
 func FindUserBy(column string, value interface{}) (*User, error) {
 	u := &User{}
-	q := fmt.Sprintf("SELECT id, email, token FROM users WHERE %v=$1", column)
+	wheres := make(map[string]interface{})
+	wheres[column] = value
 
-	if err := db.Get(u, q, value); err != nil {
+	query := BasicSelectQuery{
+		table:   "users",
+		columns: []string{"id", "email", "token"},
+		wheres:  wheres,
+	}
+
+	if err := Select(u, query); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, ErrNoUser
 		}
@@ -47,7 +54,16 @@ func CreateUser(email string) (*User, error) {
 		return nil, err
 	}
 
-	_, err = db.Exec(`INSERT INTO users (email, token) VALUES ($1, $2)`, email, token)
+	colvalues := make(map[string]interface{})
+	colvalues["email"] = email
+	colvalues["token"] = token
+
+	query := BasicInsertQuery{
+		table:     "users",
+		colvalues: colvalues,
+	}
+
+	_, err = Insert(query)
 	if err != nil {
 		return nil, err
 	}
