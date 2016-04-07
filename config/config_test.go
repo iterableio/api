@@ -18,10 +18,11 @@ func TestLoad(t *testing.T) {
 
 	conf := IterableConfig{}
 	err := load(&conf, "test.yaml", yaml.Unmarshal)
-
 	assert.Nil(err, "There was no error")
-	assert.Equal(conf.Postgres.DBName, "iterable_test", "This should be the same as test.yaml")
-	assert.Equal(conf.Postgres.SSLMode, "disable", "This should be the same as test.yaml")
+
+	same := "This should be the same as test.yaml"
+	assert.Equal(conf.Postgres.DBName, "iterable_test", same)
+	assert.Equal(conf.Postgres.SSLMode, "disable", same)
 }
 
 func TestLoadFileMissing(t *testing.T) {

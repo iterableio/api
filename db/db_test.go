@@ -28,5 +28,5 @@ func TestConnectSQL(t *testing.T) {
 
 	ConnectSQL()
 
-	assert.NotNil(DB, "Should not be nil, should be set to test DB")
+	assert.NotNil(db, "Should not be nil, should be set to test DB")
 }
