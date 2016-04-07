@@ -23,13 +23,7 @@ type BasicInsertQuery struct {
 func Insert(query BasicInsertQuery) (sql.Result, error) {
 	columns, values := common.Unzip(query.colvalues)
 	insertColumns := strings.Join(columns, ", ")
-
-	bindings := make([]string, len(columns))
-	for i := 0; i < len(bindings); i++ {
-		bindings[i] = fmt.Sprintf("$%v", strconv.Itoa(i+1))
-	}
-	insertBindings := strings.Join(bindings, ", ")
-
+	insertBindings := strings.Join(createBindingsSlice(len(columns)), ", ")
 	q := fmt.Sprintf("INSERT INTO %v (%v) VALUES (%v)", query.table, insertColumns, insertBindings)
 	return db.Exec(q, values...)
 }
@@ -39,6 +33,14 @@ func Select(dest interface{}, query BasicSelectQuery) error {
 	selectColumns := strings.Join(query.columns, ", ")
 	q := fmt.Sprintf("SELECT %v FROM %v WHERE %v", selectColumns, query.table, wheres)
 	return db.Get(dest, q, values...)
+}
+
+func createBindingsSlice(n int) []string {
+	bindings := make([]string, n)
+	for i := 0; i < n; i++ {
+		bindings[i] = fmt.Sprintf("$%v", strconv.Itoa(i+1))
+	}
+	return bindings
 }
 
 func formatWheresAndOrderValues(wheres map[string]interface{}) (string, []interface{}) {
