@@ -13,6 +13,7 @@ func InitRouter() *httprouter.Router {
 	router.GET("/api/", index)
 	router.GET("/api/users/:userId", auth(getUser))
 	router.POST("/api/users", createUser)
+	router.POST("/api/users/:userId/frames", auth(pushFrames))
 
 	return router
 }

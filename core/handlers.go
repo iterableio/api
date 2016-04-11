@@ -49,3 +49,14 @@ func createUser(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 	WriteResponse(w, user)
 }
+
+func pushFrames(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	var req struct {
+		Frames []db.Frame
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteErrorInternal(w, err)
+		return
+	}
+	go startPipeline(req.Frames)
+}
