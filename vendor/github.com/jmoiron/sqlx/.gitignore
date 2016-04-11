@@ -20,12 +20,5 @@ _cgo_export.*
 _testmain.go
 
 *.exe
-*.test
-*.prof
-
-# Swap files vim
-*.swp
-*.swo
-
-# Swap files emacs
-\#*#
+tags
+environ
